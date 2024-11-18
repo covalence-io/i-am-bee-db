@@ -1,22 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from "react";
+import Navbar from "./components/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./views/Home";
+import Sightings from "./views/Sightings";
+import SightingDetails from "./views/SightingDetails";
+import Create from "./views/Create";
+import Edit from "./views/Edit";
 
-interface AppProps {}
-
-const App = (props: AppProps) => {
-	const [data, setData] = useState('');
-
-	useEffect(() => {
-		fetch('http://localhost:3000/api/hello')
-			.then(res => res.json())
-			.then(data => setData(data.message))
-			.catch(e => console.log('[fetch erorr]', e));
-	}, []);
-
-	return (
-		<div className="mx-auto mt-5 w-25">
-			<div className="alert alert-info text-center">Hello {data}</div>
-		</div>
-	);
+const App = () => {
+    return (
+        <BrowserRouter>
+            <Navbar />
+            <main className="container">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/create" element={<Create />} />
+                    <Route path="/sightings" element={<Sightings />} />
+                    <Route path="/sightings/:id" element={<SightingDetails />} />
+                    <Route path="/sightings/:id/edit" element={<Edit />} />
+                    <Route path="/login" element={<h1>login</h1>} />
+                    <Route path="/register" element={<h1>register</h1>} />
+                </Routes>
+            </main>
+        </BrowserRouter>
+    );
 };
 
 export default App;
